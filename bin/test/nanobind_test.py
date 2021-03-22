@@ -3,26 +3,23 @@ import os
 from datetime import datetime
 import subprocess
 
-DEFAULT_NPCHARGE = -1000
-DEFAULT_LIGAND = 50
-DEFAULT_SALT = 0.175
+DEFAULT_EPSILON = 1
+DEFAULT_CONCENTRATION= 9
+DEFAULT_NCOMPLEXES = 108
+DEFAULT_WALLSPACING = 100
+DEFAULT_TIMEINMILS = 275
 
-'''
-@testbook.testbook('npassemblylab-frontend.ipynb', execute=True)
+@testbook.testbook('nanobind-frontend.ipynb', execute=True)
 def test_runPreprocessor(tb):
     t0 = datetime.now()
     func = tb.ref("runPreprocessor")
-    func(DEFAULT_NPCHARGE, DEFAULT_LIGAND, DEFAULT_SALT)
+    func(DEFAULT_EPSILON, DEFAULT_CONCENTRATION, DEFAULT_NCOMPLEXES, DEFAULT_WALLSPACING, DEFAULT_TIMEINMILS)
     logf = "./preprocessor.log"
-    lammpsf = "./in.lammps"
     assert os.path.exists(logf) == 1
-    assert os.path.exists(lammpsf) == 1
     t1 = datetime.fromtimestamp(os.path.getmtime(logf))
-    t2 = datetime.fromtimestamp(os.path.getmtime(lammpsf))
-    assert (t1>t0 and t2>t0)
+    assert (t1>t0)
     os.remove(logf)
-    os.remove(lammpsf)
-'''
+
 '''
 def test_backend():
     retcode1, retstr = subprocess.getstatusoutput("make run-preprocessor")
